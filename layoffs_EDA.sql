@@ -1,4 +1,4 @@
--- Exploratory Data Analysis
+-- World Layoffs Exploratory Data Analysis
 
 SELECT * 
 FROM layoffs_staging2;
@@ -135,6 +135,38 @@ WHERE years IS NOT NULL
 SELECT *
 FROM Company_Year_Rank
 WHERE Ranking <=5;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 -- WITH Company_Year(company, years, total_laid_off) AS
