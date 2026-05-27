@@ -1,17 +1,19 @@
--- Data Cleaning 
+-- World layoffs Data Cleaning Projects
 -- 1.Remove Duplicates
 -- 2.Standardize data
 -- 3. Null values or blank values
 -- 4. Remove columns
 
+
 -- Looking at the messy data
 SELECT *
-FROM layoffS; 
+FROM layoffS;
 
 -- Creating a copy before cleaning
 CREATE TABLE layoffs_staging
 LIKE layoffs;
 
+-- Viewing the copied table
 SELECT *
 FROM layoffs_staging; 
 
@@ -24,7 +26,7 @@ SELECT *
 FROM layoffs_staging;
 
 -- 1. Removing duplicates
--- 1.1 Identifying duplicates
+-- 1.1 Identifying duplicates with ROW_NUMBER()
 SELECT *,
 ROW_NUMBER() OVER( 
 PARTITION BY company, location, industry, total_laid_off, `date`, stage, country, funds_raised_millions) AS row_num
@@ -42,25 +44,7 @@ SELECT *
 FROM duplicate_cte
 WHERE row_num > 1;
 
--- SELECT *
--- FROM layoffs_staging
--- WHERe company = 'Casper'; 
-
 -- 1.3 Deleting duplicates
-
--- WITH duplicate_cte AS
--- (
--- SELECT *,
--- ROW_NUMBER() OVER( 
--- PARTITION BY company, location, industry, total_laid_off, `date`, stage, country, funds_raised_millions) AS row_num
--- FROM layoffs_staging
--- )
--- DELETE
--- FROM duplicate_cte
--- WHERE row_num > 1;
-
-
-
 CREATE TABLE `layoffs_staging2` (
   `company` text,
   `location` text,
@@ -84,8 +68,8 @@ ROW_NUMBER() OVER(
 PARTITION BY company, location, industry, total_laid_off, `date`, stage, country, funds_raised_millions) AS row_num
 FROM layoffs_staging;
 
-SELECT *
-FROM layoffs_staging2; 
+-- SELECT *
+-- FROM layoffs_staging2; 
 
 SELECT *
 FROM layoffs_staging2
@@ -95,12 +79,13 @@ DELETE
 FROM layoffs_staging2
 WHERE row_num > 1;
 
-SELECT *
-FROM layoffs_staging2;
+-- SELECT *
+-- FROM layoffs_staging2;
+
+
 
 -- 2. Standardizing data
 -- 2.1 Removing extra space and updating the trimmed column value to original column
-
 SELECT DISTINCT company
 FROM layoffs_staging2;
 
@@ -187,6 +172,9 @@ MODIFY COLUMN `date` DATE;
 SELECT *
 FROM layoffs_staging2;
 
+
+
+
 -- 3. Removing Null values or blank values
 -- 3.1 Finding Null values or blank values
 SELECT *
@@ -246,6 +234,9 @@ AND percentage_laid_off is NULL;
 
 SELECT *
 FROM layoffs_staging2; 
+
+
+
 
 -- 4. Removing columns
 ALTER TABLE layoffs_staging2
