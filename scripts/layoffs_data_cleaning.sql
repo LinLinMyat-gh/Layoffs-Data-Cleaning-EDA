@@ -42,25 +42,7 @@ SELECT *
 FROM duplicate_cte
 WHERE row_num > 1;
 
--- SELECT *
--- FROM layoffs_staging
--- WHERe company = 'Casper'; 
-
 -- 1.3 Deleting duplicates
-
--- WITH duplicate_cte AS
--- (
--- SELECT *,
--- ROW_NUMBER() OVER( 
--- PARTITION BY company, location, industry, total_laid_off, `date`, stage, country, funds_raised_millions) AS row_num
--- FROM layoffs_staging
--- )
--- DELETE
--- FROM duplicate_cte
--- WHERE row_num > 1;
-
-
-
 CREATE TABLE `layoffs_staging2` (
   `company` text,
   `location` text,
